@@ -10,27 +10,25 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                bat 'python --version'
                 bat 'python -m pip install --upgrade pip'
-                bat 'pip install -r requirements.txt'
+                bat 'python -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Pytest') {
             steps {
-                bat 'pytest -v'
+                bat 'python -m pytest -v'
             }
         }
     }
 
     post {
-        always {
-            echo 'Pipeline completed'
-        }
         success {
-            echo 'All tests passed ✅'
+            echo '✅ Tests passed'
         }
         failure {
-            echo 'Tests failed ❌'
+            echo '❌ Tests failed'
         }
     }
 }
